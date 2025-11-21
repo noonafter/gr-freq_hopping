@@ -1,0 +1,60 @@
+id: freq_hopping_slot_frame
+label: slot_frame
+category: '[freq_hopping]'
+
+templates:
+  imports: |
+    from gnuradio import freq_hopping
+    from gnuradio.freq_hopping import calc_vlen_slot_frame
+  make: freq_hopping.slot_frame(${hop_rate}, ${M_order}, ${info_seed})
+
+#  Make one 'parameters' list entry for every parameter you want settable from the GUI.
+#     Keys include:
+#     * id (makes the value accessible as keyname, e.g. in the make entry)
+#     * label (label shown in the GUI)
+#     * dtype (e.g. int, float, complex, byte, short, xxx_vector, ...)
+#     * default
+parameters:
+- id: hop_rate
+  label: Hop Rate (hops/s)
+  dtype: int
+  default: 5
+  options: [ 5, 10, 20, 50, 100, 110 ]
+  option_labels: [ '5 hops/s', '10 hops/s', '20 hops/s', '50 hops/s', '100 hops/s', '110 hops/s' ]
+- id: M_order
+  label: Modulation Order
+  dtype: int
+  default: 4
+- id: info_seed
+  label: Info Generator Seed
+  dtype: int
+  default: 12345
+#- id: ...
+#  label: ...
+#  dtype: ...
+
+#  Make one 'inputs' list entry per input and one 'outputs' list entry per output.
+#  Keys include:
+#      * label (an identifier for the GUI)
+#      * domain (optional - stream or message. Default is stream)
+#      * dtype (e.g. int, float, complex, byte, short, xxx_vector, ...)
+#      * vlen (optional - data stream vector length. Default is 1)
+#      * optional (optional - set to 1 for optional inputs. Default is 0)
+inputs:
+#- label: ...
+#  domain: ...
+#  dtype: ...
+#  vlen: ...
+#  optional: ...
+
+outputs:
+  - label: frame_out
+    domain: stream
+    dtype: int
+    vlen: ${ calc_vlen_slot_frame(hop_rate) }
+    optional: 0
+
+
+#  'file_format' specifies the version of the GRC yml format used in the file
+#  and should usually not be changed.
+file_format: 1

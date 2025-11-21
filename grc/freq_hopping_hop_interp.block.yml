@@ -1,0 +1,45 @@
+id: freq_hopping_hop_interp
+label: hop_interp
+category: '[freq_hopping]'
+
+templates:
+  imports: from gnuradio import freq_hopping
+  make: freq_hopping.hop_interp(${interp_fac}, ${vlen_in})
+
+parameters:
+  - id: interp_fac
+    label: Interpolation Factor
+    dtype: int
+    default: 2
+
+  - id: vlen_in
+    label: Input Vector Length
+    dtype: int
+    default: 1
+
+inputs:
+  - label: in
+    domain: stream
+    dtype: complex
+    vlen: ${vlen_in}
+
+outputs:
+  - label: out
+    domain: stream
+    dtype: complex
+    vlen: ${vlen_in * interp_fac}
+
+#  'file_format' specifies the version of the GRC yml format used in the file
+#  and should usually not be changed.
+file_format: 1
+
+# Documentation (optional but recommended)
+documentation: |
+  This block performs interpolation on complex input vectors using a resampler.
+  Input: complex vectors of length vlen_in
+  Output: complex vectors of length vlen_in * interp_fac
+
+# GUI hints (optional)
+# These help position the block in the GRC canvas
+# gui_hints:
+#   - 0,0,1,1

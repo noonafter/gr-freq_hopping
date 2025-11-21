@@ -1,0 +1,65 @@
+id: freq_hopping_bb_pskmod
+label: BB PSK Modulator
+category: '[freq_hopping]'
+
+templates:
+  imports: |
+    from gnuradio import freq_hopping
+    from gnuradio.freq_hopping import calc_vlen_slot_frame
+    from gnuradio.freq_hopping import calc_vlen_bb_pskmod
+  make: freq_hopping.bb_pskmod(${hop_rate}, ${M_order}, ${Ksa_ch})
+
+parameters:
+  - id: hop_rate
+    label: Hop Rate (hops/s)
+    dtype: int
+    default: 5
+    options: [5, 10, 20, 50, 100, 110]
+    option_labels: ['5 hops/s', '10 hops/s', '20 hops/s', '50 hops/s', '100 hops/s', '110 hops/s']
+
+  - id: M_order
+    label: Modulation Order
+    dtype: int
+    default: 4
+    options: [2, 4, 8]
+    option_labels: ['BPSK (2)', 'QPSK (4)', '8PSK (8)']
+
+  - id: Ksa_ch
+    label: Oversampling Factor
+    dtype: int
+    default: 4
+    options: [2, 4, 8, 16]
+    option_labels: ['2x', '4x', '8x', '16x']
+
+inputs:
+  - label: in
+    domain: stream
+    dtype: int
+    vlen: ${ calc_vlen_slot_frame(hop_rate) }  # 默认值，实际会根据 hop_rate 动态计算
+
+outputs:
+  - label: out
+    domain: stream
+    dtype: complex
+    vlen: ${ calc_vlen_bb_pskmod(hop_rate) }  # 默认值，实际会根据 hop_rate 和 Ksa_ch 动态计算
+
+# Documentation
+file_format: 1
+
+documentation: |-
+  PSK调制和成形滤波块。
+  
+  接收整数符号索引，进行PSK调制和RRC成形滤波。
+  
+  参数:
+  - Hop Rate: 跳频速率，决定帧长度
+  - Modulation Order: 调制阶数 (BPSK/QPSK/8PSK)
+  - Oversampling Factor: 过采样因子
+  
+  输入: 整数向量 (符号索引)
+  输出: 复数向量 (调制和成形滤波后的信号)
+
+assertions:
+  - ${hop_rate in [5, 10, 20, 50, 100, 110]}
+  - ${M_order in [2, 4, 8]}
+  - ${Ksa_ch > 0}

@@ -1,0 +1,63 @@
+id: freq_hopping_hop_mod
+label: Frequency Hopping Modulator
+category: '[freq_hopping]'
+
+templates:
+  imports: from gnuradio import freq_hopping
+  make: freq_hopping.hop_mod(${bw_hop}, ${ch_sep}, ${freq_carrier}, ${fsa_hop}, ${vlen})
+
+parameters:
+  - id: bw_hop
+    label: Hopping Bandwidth (Hz)
+    dtype: float
+    default: 5e5
+  - id: ch_sep
+    label: Channel Separation (Hz)
+    dtype: float
+    default: 3e3
+  - id: freq_carrier
+    label: Carrier Frequency (Hz)
+    dtype: float
+    default: 0.0
+  - id: fsa_hop
+    label: Hopping Sampling Rate (Hz)
+    dtype: float
+    default: 1e6
+  - id: vlen
+    label: Vector Length
+    dtype: int
+    default: 1
+
+inputs:
+  - label: in
+    domain: stream
+    dtype: complex
+    vlen: ${vlen}
+
+outputs:
+  - label: out
+    domain: stream
+    dtype: complex
+    vlen: ${vlen}
+
+# Documentation
+file_format: 1
+
+documentation: |
+  Frequency Hopping Modulator block that randomly hops between frequencies within the specified bandwidth.
+
+  Parameters:
+  - Hopping Bandwidth (bw_hop): Total bandwidth available for frequency hopping
+  - Channel Separation (ch_sep): Spacing between adjacent frequency channels
+  - Carrier Frequency (freq_carrier): Center frequency of the hopping pattern
+  - Hopping Sampling Rate (fsa_hop): Sampling rate used for frequency modulation
+  - Vector Length (vlen): Number of samples processed per vector
+
+  The block generates a frequency table based on the hopping bandwidth and channel separation,
+  then randomly selects frequencies from this table for each output vector.
+
+asserts:
+  - ${bw_hop > 0}
+  - ${ch_sep > 0}
+  - ${fsa_hop > 0}
+  - ${vlen > 0}
