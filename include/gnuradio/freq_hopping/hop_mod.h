@@ -36,6 +36,7 @@ public:
                      double ch_sep = 3000,
                      double freq_carrier = 0,
                      double fsa_hop = 12000,
+                     double hop_rate = 5,
                      int vlen = 1);
 
 };

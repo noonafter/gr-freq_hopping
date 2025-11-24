@@ -4,7 +4,7 @@ category: '[freq_hopping]'
 
 templates:
   imports: from gnuradio import freq_hopping
-  make: freq_hopping.hop_mod(${bw_hop}, ${ch_sep}, ${freq_carrier}, ${fsa_hop}, ${vlen})
+  make: freq_hopping.hop_mod(${bw_hop}, ${ch_sep}, ${freq_carrier}, ${fsa_hop}, ${hop_rate}, ${vlen})
 
 parameters:
   - id: bw_hop
@@ -23,6 +23,10 @@ parameters:
     label: Hopping Sampling Rate (Hz)
     dtype: float
     default: 1e6
+  - id: hop_rate
+    label: Hopping Rate (hops/s)
+    dtype: float
+    default: 5
   - id: vlen
     label: Vector Length
     dtype: int

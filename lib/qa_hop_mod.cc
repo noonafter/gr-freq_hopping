@@ -31,6 +31,7 @@ BOOST_AUTO_TEST_CASE(test_hop_mod_basic)
     double ch_sep = 100e3;        // 100 kHz 信道间隔
     double freq_carrier = 4e6;    // 4 MHz 载波频率
     double fsa_hop = 10e6;        // 10 MHz 采样率
+    double hop_rate = 5;
     int vlen = 1000;              // 向量长度
     int num_frames = 3;           // 测试3帧
 
@@ -38,7 +39,7 @@ BOOST_AUTO_TEST_CASE(test_hop_mod_basic)
     std::vector<gr_complex> test_data(vlen*num_frames, gr_complex(1.0f, 0.0f));
 
     // 创建块实例
-    auto hop_mod_block = hop_mod::make(bw_hop, ch_sep, freq_carrier, fsa_hop, vlen);
+    auto hop_mod_block = hop_mod::make(bw_hop, ch_sep, freq_carrier, fsa_hop, hop_rate, vlen);
     auto source = gr::blocks::vector_source_c::make(test_data, false, vlen);
     auto head = gr::blocks::head::make(sizeof(gr_complex) * vlen, num_frames);
     auto sink = gr::blocks::vector_sink_c::make(vlen, 1024);
@@ -79,10 +80,11 @@ BOOST_AUTO_TEST_CASE(test_hop_mod_frequency_table)
     double ch_sep = 200e3;        // 200 kHz 信道间隔
     double freq_carrier = 900e6;  // 900 MHz 载波频率
     double fsa_hop = 10e6;        // 10 MHz 采样率
+    double hop_rate = 50;
     int vlen = 100;
 
     // 创建块实例
-    auto hop_mod_block = hop_mod::make(bw_hop, ch_sep, freq_carrier, fsa_hop, vlen);
+    auto hop_mod_block = hop_mod::make(bw_hop, ch_sep, freq_carrier, fsa_hop, hop_rate, vlen);
 
     // 创建测试数据
     std::vector<gr_complex> test_data(vlen, gr_complex(1.0f, 0.0f));
@@ -116,10 +118,12 @@ BOOST_AUTO_TEST_CASE(test_hop_mod_different_parameters)
         double ch_sep = 100e3;        // 100 kHz
         double freq_carrier = 2.4e9;  // 2.4 GHz
         double fsa_hop = 5e6;         // 5 MHz
+        double hop_rate = 50;
+
 
         std::vector<gr_complex> test_data(vlen*num_frames, gr_complex(0.5f, 0.5f));
 
-        auto hop_mod_block = hop_mod::make(bw_hop, ch_sep, freq_carrier, fsa_hop, vlen);
+        auto hop_mod_block = hop_mod::make(bw_hop, ch_sep, freq_carrier, fsa_hop, hop_rate, vlen);
         auto source = gr::blocks::vector_source_c::make(test_data, false, vlen);
         auto head = gr::blocks::head::make(sizeof(gr_complex) * vlen, num_frames);
         auto sink = gr::blocks::vector_sink_c::make(vlen, 1024);
@@ -141,10 +145,11 @@ BOOST_AUTO_TEST_CASE(test_hop_mod_different_parameters)
         double ch_sep = 50e3;         // 50 kHz
         double freq_carrier = 5.8e9;  // 5.8 GHz
         double fsa_hop = 20e6;        // 20 MHz
+        double hop_rate = 50;
 
         std::vector<gr_complex> test_data(vlen*num_frames, gr_complex(0.0f, 1.0f));
 
-        auto hop_mod_block = hop_mod::make(bw_hop, ch_sep, freq_carrier, fsa_hop, vlen);
+        auto hop_mod_block = hop_mod::make(bw_hop, ch_sep, freq_carrier, fsa_hop, hop_rate, vlen);
         auto source = gr::blocks::vector_source_c::make(test_data, false, vlen);
         auto head = gr::blocks::head::make(sizeof(gr_complex) * vlen, num_frames);
         auto sink = gr::blocks::vector_sink_c::make(vlen, 1024);
@@ -168,6 +173,7 @@ BOOST_AUTO_TEST_CASE(test_hop_mod_with_modulated_input)
     double ch_sep = 100e3;
     double freq_carrier = 1e9;
     double fsa_hop = 8e6;
+    double hop_rate = 50;
     int vlen = 800;
     int num_frames = 2;
 
@@ -179,7 +185,7 @@ BOOST_AUTO_TEST_CASE(test_hop_mod_with_modulated_input)
         test_data[i] = gr_complex(symbol, 0.0f);
     }
 
-    auto hop_mod_block = hop_mod::make(bw_hop, ch_sep, freq_carrier, fsa_hop, vlen);
+    auto hop_mod_block = hop_mod::make(bw_hop, ch_sep, freq_carrier, fsa_hop, hop_rate, vlen);
     auto source = gr::blocks::vector_source_c::make(test_data, false, vlen);
     auto head = gr::blocks::head::make(sizeof(gr_complex) * vlen, num_frames);
     auto sink = gr::blocks::vector_sink_c::make(vlen, 1024);
@@ -215,6 +221,7 @@ BOOST_AUTO_TEST_CASE(test_hop_mod_frame_consistency)
     double ch_sep = 100e3;
     double freq_carrier = 900e6;
     double fsa_hop = 10e6;
+    double hop_rate = 50;
     int vlen = 200;
     int num_frames = 5;
 
@@ -224,7 +231,7 @@ BOOST_AUTO_TEST_CASE(test_hop_mod_frame_consistency)
         test_data[i] = gr_complex(std::cos(i * 0.1f), std::sin(i * 0.1f));
     }
 
-    auto hop_mod_block = hop_mod::make(bw_hop, ch_sep, freq_carrier, fsa_hop, vlen);
+    auto hop_mod_block = hop_mod::make(bw_hop, ch_sep, freq_carrier, fsa_hop, hop_rate, vlen);
     auto source = gr::blocks::vector_source_c::make(test_data, false, vlen);
     auto sink = gr::blocks::vector_sink_c::make(vlen, 1024);
 
