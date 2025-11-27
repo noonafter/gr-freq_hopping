@@ -14,5 +14,7 @@ install(FILES
     slot_frame.h
     bb_pskmod.h
     hop_interp.h
-    hop_mod.h DESTINATION include/gnuradio/freq_hopping
+    hop_mod.h
+    hop_demod.h
+    DESTINATION include/gnuradio/freq_hopping
 )

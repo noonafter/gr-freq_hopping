@@ -76,12 +76,12 @@ BOOST_AUTO_TEST_CASE(test_hop_mod_basic)
 BOOST_AUTO_TEST_CASE(test_hop_mod_frequency_table)
 {
     // 测试频率表生成
-    double bw_hop = 1e6;          // 1 MHz 跳频带宽
-    double ch_sep = 200e3;        // 200 kHz 信道间隔
-    double freq_carrier = 900e6;  // 900 MHz 载波频率
-    double fsa_hop = 10e6;        // 10 MHz 采样率
-    double hop_rate = 50;
-    int vlen = 100;
+    double bw_hop = 2e6;          // 1 MHz 跳频带宽
+    double ch_sep = 3e3;        // 200 kHz 信道间隔
+    double freq_carrier = 0;  // 900 MHz 载波频率
+    double fsa_hop = 2.4576e6;        // 10 MHz 采样率
+    double hop_rate = 5;
+    int vlen = 491520;
 
     // 创建块实例
     auto hop_mod_block = hop_mod::make(bw_hop, ch_sep, freq_carrier, fsa_hop, hop_rate, vlen);

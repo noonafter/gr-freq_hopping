@@ -16,6 +16,7 @@ list(APPEND freq_hopping_sources
     bb_pskmod_impl.cc
     hop_interp_impl.cc
     hop_mod_impl.cc
+    hop_demod_impl.cc
 )
 
 set(freq_hopping_sources "${freq_hopping_sources}" PARENT_SCOPE)
@@ -62,6 +63,7 @@ include(GrTest)
 #include_directories()
 # List all files that contain Boost.UTF unit tests here
 list(APPEND test_freq_hopping_sources
+    qa_hop_demod.cc
     qa_bb_pskmod.cc
     qa_slot_frame.cc
     qa_hop_mod.cc

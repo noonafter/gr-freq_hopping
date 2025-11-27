@@ -10,5 +10,6 @@ install(FILES
     freq_hopping_slot_frame.block.yml
     freq_hopping_bb_pskmod.block.yml
     freq_hopping_hop_interp.block.yml
-    freq_hopping_hop_mod.block.yml DESTINATION share/gnuradio/grc/blocks
+    freq_hopping_hop_mod.block.yml
+    freq_hopping_hop_demod.block.yml DESTINATION share/gnuradio/grc/blocks
 )

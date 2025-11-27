@@ -1,0 +1,71 @@
+id: freq_hopping_hop_demod
+label: Hop Demodulator
+category: '[freq_hopping]'
+
+templates:
+  imports: from gnuradio import freq_hopping
+  make: freq_hopping.hop_demod(${bw_hop}, ${ch_sep}, ${freq_carrier}, ${fsa_hop}, ${hop_rate})
+
+parameters:
+  - id: bw_hop
+    label: Hop Bandwidth (Hz)
+    dtype: real
+    default: 100e6
+  - id: ch_sep
+    label: Channel Separation (Hz)
+    dtype: real
+    default: 10e6
+  - id: freq_carrier
+    label: Carrier Frequency (Hz)
+    dtype: real
+    default: 1e9
+  - id: fsa_hop
+    label: Sample Rate (Hz)
+    dtype: real
+    default: 1e6
+  - id: hop_rate
+    label: Hop Rate (hops/sec)
+    dtype: real
+    default: 1000
+
+inputs:
+  - label: in
+    domain: stream
+    dtype: complex
+    vlen: 1
+
+outputs:
+  - label: out
+    domain: stream
+    dtype: complex
+    vlen: 1
+
+# Documentation
+file_format: 1
+
+# Documentation for the block
+documentation: |
+  Frequency hopping demodulator that synchronizes with the transmitter using rx_time tags.
+  This block performs de-hopping by mixing the input signal with negative frequencies
+  corresponding to the hop sequence.
+
+  Parameters:
+  - Hop Bandwidth: Total frequency hopping bandwidth in Hz
+  - Channel Separation: Spacing between adjacent frequency channels in Hz
+  - Carrier Frequency: Center frequency of the hopping pattern in Hz
+  - Sample Rate: Input signal sample rate in Hz
+  - Hop Rate: Frequency hopping rate in hops per second
+
+  The block uses rx_time tags from USRP source for time synchronization and
+  generates the same frequency sequence as the transmitter using a fixed random seed.
+
+# Graphical representation
+graphics:
+  - name: hop_demod
+    parameters:
+      - key: bgcolor
+        value: lightblue
+      - key: text
+        value: Hop Demod
+      - key: text_color
+        value: black

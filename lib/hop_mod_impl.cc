@@ -141,15 +141,24 @@ uint64_t hop_mod_impl::align_to_time_slot(uint64_t current_time_ns)
     // 计算时隙大小（纳秒）
     uint64_t slot_size_ns = static_cast<uint64_t>(d_hop_period * 1e9);
 
-    // 计算当前时隙+hop_period编号，+hop_period是为了至少留1个slot处理
-    uint64_t current_slot = (time_since_midnight+slot_size_ns) / slot_size_ns;
+    // 当前slot的结尾时刻的编号，即下一slot的开始时刻的编号
+    uint64_t current_slot_end_idx = (time_since_midnight+slot_size_ns) / slot_size_ns;
+
+    // 真实发送时刻的编号，在current_slot_end基础上+1,是为了至少留1个slot处理
+    uint64_t real_tx_slot_idx = current_slot_end_idx + 1;
+
+    // 这一段很重要！需要按照真实发送时刻的编号来初始化d_hop_count
+    // 后续依次走。这样接收端就能知道任意时刻的freq_tab
+    d_hop_count = real_tx_slot_idx % (d_hop_sequence.size());
+    std::cout << "TX: FIRST HOP: idx: " << d_hop_count << std::endl;
 
     // 下一个时隙的开始时间（从当天0点开始）
-    uint64_t next_slot_start = (current_slot + 1) * slot_size_ns;
+    uint64_t real_tx_start = real_tx_slot_idx * slot_size_ns;
+    std::cout << "TX: FIRST HOP: real_tx_start: " << real_tx_start << std::endl;
 
     // 计算绝对时间（从epoch开始）
     uint64_t base_time = current_time_ns - time_since_midnight; // today 0:0:0
-    uint64_t aligned_time = base_time + next_slot_start;
+    uint64_t aligned_time = base_time + real_tx_start;
 
     return aligned_time;
 }
@@ -171,6 +180,7 @@ int hop_mod_impl::work(int noutput_items,
 
         // 对齐到下一个时隙开始
         d_start_time = align_to_time_slot(current_time_ns);
+
         d_first_hop = false;
         // std::cout << "current_time_ns: " << current_time_ns << std::endl;
         // std::cout << "d_start_time: " << d_start_time << std::endl;
@@ -192,8 +202,8 @@ int hop_mod_impl::work(int noutput_items,
                           time_tuple);
 
 
-        std::cout << "First hop aligned to time slot: " << d_start_time
-                  << " ns (" << integer_sec << " + " << fractional_sec << " s)" << std::endl;
+        // std::cout << "TX: first hop time: " << d_start_time
+        //           << " ns (" << integer_sec << " + " << fractional_sec << " s)" << std::endl;
     }
 
     // 处理每一帧
