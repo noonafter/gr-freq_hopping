@@ -55,6 +55,10 @@ hop_demod_impl::hop_demod_impl(
     }
     if (d_hop_rate <= 0) {
         throw std::invalid_argument("hop_rate must be positive");
+    }else if (fabs(d_hop_rate - 110.0) < 1e-6){
+        d_hop_rate = 9600.0/87;
+        d_hop_period = 1.0 / d_hop_rate;
+        d_samples_per_hop = d_hop_period * fsa_hop;
     }
 
     // 初始化频率表（与发送端相同）
@@ -158,6 +162,8 @@ int hop_demod_impl::work(int noutput_items,
             // 初始化状态
             d_hop_count = 0;
             d_elapsed_samples = (rx_time_ns_since_midnight - ref_slot_ns) * d_fsa_hop / 1e9;
+            // 这里将d_elapsed_samples稍微增大一点，可以让接收端提前切换频率。增大长度不能超过频率切换时间
+            d_elapsed_samples = d_elapsed_samples + 0.1*d_fsa_hop/1e3;
             d_has_time_reference = true;
 
             // 计算初始频率

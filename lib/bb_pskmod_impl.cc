@@ -56,6 +56,7 @@ bb_pskmod_impl::bb_pskmod_impl(int hop_rate, int M_order, int Ksa_ch)
     design_rrc_filter();
 
     d_initialized = true;
+    // set_history(3);
 }
 
 bb_pskmod_impl::~bb_pskmod_impl()
@@ -123,6 +124,22 @@ int bb_pskmod_impl::work(int noutput_items,
 {
     auto in = static_cast<const input_type*>(input_items[0]);
     auto out = static_cast<output_type*>(output_items[0]);
+    // 通过测试发现，history()默认值为1,当使用set_histry(n+1)设置重叠区域后，
+    // 每次in会有n个item是上一次in的末尾n个数据，即滑动窗会有n个item重叠
+    // 即每次读入的数据中,in[0],...,in[n-1]是旧数据，一共n个（第一次调用时，为全0）
+    // in[n],...,in[n+noutput_items-1]是新数据，一共noutput_items个
+    // 具体实现：在读入niutput_items数据后（将rptr后移niutput_items），将rptr前移n
+    // printf("bb_pskmod_impl::work, history: %d\n",history());
+    // printf("new work, noutput_items: %d\n",noutput_items);
+    // printf("bb_pskmod_impl::work, in[0]: %d\n",in[0]);
+    // printf("bb_pskmod_impl::work, in[1]: %d\n",in[1]);
+    // printf("bb_pskmod_impl::work, in[0+d_input_frame_len]: %d\n",in[0+d_input_frame_len]);
+    // printf("bb_pskmod_impl::work, in[1+d_input_frame_len]: %d\n",in[1+d_input_frame_len]);
+    // printf("bb_pskmod_impl::work, in[noutput_items+history()-3)*d_input_frame_len+0]: %d\n",in[(noutput_items+history()-3)*d_input_frame_len]);
+    // printf("bb_pskmod_impl::work, in[noutput_items+history()-3)*d_input_frame_len+1]: %d\n",in[(noutput_items+history()-3)*d_input_frame_len+1]);
+    // printf("bb_pskmod_impl::work, in[(noutput_items+history()-2)*d_input_frame_len]: %d\n",in[(noutput_items+history()-2)*d_input_frame_len]);
+    // printf("bb_pskmod_impl::work, in[(noutput_items+history()-2)*d_input_frame_len+1]: %d\n",in[(noutput_items+history()-2)*d_input_frame_len+1]);
+
     // 首先将out@(noutput_items*d_output_frame_length)全部填0
     memset(out, 0, noutput_items * d_output_frame_len * sizeof(output_type));
 

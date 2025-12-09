@@ -54,6 +54,13 @@ hop_mod_impl::hop_mod_impl(double bw_hop, double ch_sep, double freq_carrier, do
     if (d_vlen <= 0) {
         throw std::invalid_argument("vlen must be positive");
     }
+    if (d_hop_rate <= 0) {
+        throw std::invalid_argument("hop_rate must be positive");
+    }else if (fabs(d_hop_rate - 110.0) < 1e-6){
+        d_hop_rate = 9600.0/87;
+        d_hop_period = 1.0 / d_hop_rate;
+        // d_samples_per_hop = d_hop_period * fsa_hop;
+    }
 
     // 初始化频率表
     initialize_frequency_table();
