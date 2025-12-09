@@ -79,7 +79,7 @@ void slot_frame_impl::generate_frame()
     }
 
     // 1. 生成同步头 (使用固定seed=0)
-    std::mt19937 head_gen(0); // 固定seed
+    std::mt19937 head_gen(2025); // 固定seed
     std::uniform_int_distribution<int> head_dist(0, d_M_order - 1);
 
     for (int i = 0; i < num_sym_head; i++) {
