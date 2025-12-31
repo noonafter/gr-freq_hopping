@@ -1,0 +1,38 @@
+id: freq_hopping_symbol_recover
+label: Symbol Recover
+category: '[freq_hopping]'
+
+templates:
+  imports: from gnuradio import freq_hopping
+  make: freq_hopping.symbol_recover(${sps})
+
+# 参数定义
+parameters:
+  - id: sps
+    label: Samples per Symbol
+    dtype: int
+    default: 4
+    hide: none
+
+# 输入端口定义
+inputs:
+  - label: in
+    domain: stream
+    dtype: complex
+
+# 输出端口定义
+outputs:
+  - label: out
+    domain: stream
+    dtype: complex
+
+# 文档部分，说明标签的使用
+documentation: |-
+  该模块用于频跳系统的符号恢复与相位校正。
+  
+  它会监听输入流中的 'phase_est' 标签：
+  1. 当检测到标签时，模块会强制在该位置进行采样输出。
+  2. 标签的值（PMT double）将被作为相位补偿值（exp(-j * theta)）。
+  3. 随后每隔 SPS 个采样点进行一次抽样。
+
+file_format: 1

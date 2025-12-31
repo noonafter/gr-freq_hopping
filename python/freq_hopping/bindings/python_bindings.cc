@@ -26,6 +26,7 @@ namespace py = pybind11;
     void bind_hop_interp(py::module& m);
     void bind_hop_mod(py::module& m);
     void bind_hop_demod(py::module& m);
+    void bind_symbol_recover(py::module& m);
 // ) END BINDING_FUNCTION_PROTOTYPES
 
 
@@ -59,5 +60,6 @@ PYBIND11_MODULE(freq_hopping_python, m)
     bind_hop_interp(m);
     bind_hop_mod(m);
     bind_hop_demod(m);
+    bind_symbol_recover(m);
     // ) END BINDING_FUNCTION_CALLS
 }

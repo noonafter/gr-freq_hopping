@@ -10,13 +10,13 @@
 # Setup library
 ########################################################################
 include(GrPlatform) #define LIB_SUFFIX
-
 list(APPEND freq_hopping_sources
     slot_frame_impl.cc
     bb_pskmod_impl.cc
     hop_interp_impl.cc
     hop_mod_impl.cc
     hop_demod_impl.cc
+    symbol_recover_impl.cc
 )
 
 set(freq_hopping_sources "${freq_hopping_sources}" PARENT_SCOPE)
@@ -67,6 +67,7 @@ list(APPEND test_freq_hopping_sources
     qa_bb_pskmod.cc
     qa_slot_frame.cc
     qa_hop_mod.cc
+    qa_symbol_recover.cc
 )
 # Anything we need to link to for the unit tests go here
 list(APPEND GR_TEST_TARGET_DEPS gnuradio-freq_hopping gnuradio-blocks)
