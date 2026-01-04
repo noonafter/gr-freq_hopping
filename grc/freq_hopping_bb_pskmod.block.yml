@@ -7,6 +7,7 @@ templates:
     from gnuradio import freq_hopping
     from gnuradio.freq_hopping import calc_vlen_slot_frame
     from gnuradio.freq_hopping import calc_vlen_bb_pskmod
+    from gnuradio.freq_hopping import calc_head_len_9600
   make: freq_hopping.bb_pskmod(${hop_rate}, ${M_order}, ${Ksa_ch})
 
 parameters:

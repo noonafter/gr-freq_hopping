@@ -69,6 +69,7 @@ bb_pskmod_impl::~bb_pskmod_impl()
 void bb_pskmod_impl::initialize_constellation()
 {
     d_constellation.clear();
+    float cos_pi_4 = std::cos(M_PI_4f);
 
     switch (d_M_order) {
         case 2:  // BPSK
@@ -76,7 +77,29 @@ void bb_pskmod_impl::initialize_constellation()
             gr_complex(1.0f, 0.0f),   // 0: 1+0j
             gr_complex(-1.0f, 0.0f)   // 1: -1+0j
         };
-            break;
+        break;
+
+        case 4:
+            d_constellation = {
+            gr_complex(1.0f, 0.0f),
+            gr_complex(0.0f, 1.0f),
+            gr_complex(0.0f, -1.0f),
+            gr_complex(-1.0f, 0.0f)
+            };
+        break;
+
+        case 8:
+            d_constellation = {
+            gr_complex(1.0f, 0.0f),
+            gr_complex(cos_pi_4, cos_pi_4),
+            gr_complex(-cos_pi_4, cos_pi_4),
+            gr_complex(0.0f, 1.0f),
+            gr_complex(cos_pi_4, -cos_pi_4),
+            gr_complex(0.0f, -1.0f),
+            gr_complex(-1.0f, 0.0f),
+            gr_complex(-cos_pi_4, -cos_pi_4)
+            };
+        break;
 
         default:  // 4/8PSK
             for (int i = 0; i < d_M_order; ++i) {

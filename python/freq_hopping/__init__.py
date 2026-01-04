@@ -46,5 +46,9 @@ def calc_vlen_bb_pskmod(hop_rate):
 
     base_length = base_mapping.get(hop_rate, 480*4)  # 默认 200 * Ksa_ch
     return base_length
+
+def calc_head_len_9600(hop_rate):
+    mapping = {5:432, 10:216, 20:108, 50:40, 100:20, 110:24}
+    return mapping.get(hop_rate, 432)
 # import any pure python here
 #

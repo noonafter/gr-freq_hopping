@@ -11,5 +11,6 @@ install(FILES
     freq_hopping_hop_interp.block.yml
     freq_hopping_hop_mod.block.yml
     freq_hopping_hop_demod.block.yml
-    freq_hopping_symbol_recover.block.yml DESTINATION share/gnuradio/grc/blocks
+    freq_hopping_symbol_recover.block.yml
+    freq_hopping_frame_recover.block.yml DESTINATION share/gnuradio/grc/blocks
 )

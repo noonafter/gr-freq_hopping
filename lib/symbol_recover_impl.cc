@@ -19,6 +19,7 @@ symbol_recover_impl::symbol_recover_impl(int sps)
       d_is_synced(false),
       d_tag_key(pmt::mp("phase_est"))
 {
+    set_tag_propagation_policy(TPP_DONT);
 }
 
 symbol_recover_impl::~symbol_recover_impl() {}

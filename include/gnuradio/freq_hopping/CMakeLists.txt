@@ -16,5 +16,6 @@ install(FILES
     hop_interp.h
     hop_mod.h
     hop_demod.h
-    symbol_recover.h DESTINATION include/gnuradio/freq_hopping
+    symbol_recover.h
+    frame_recover.h DESTINATION include/gnuradio/freq_hopping
 )

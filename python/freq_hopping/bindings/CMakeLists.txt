@@ -33,7 +33,8 @@ list(APPEND freq_hopping_python_files
     hop_interp_python.cc
     hop_mod_python.cc
     hop_demod_python.cc
-    symbol_recover_python.cc python_bindings.cc)
+    symbol_recover_python.cc
+    frame_recover_python.cc python_bindings.cc)
 
 GR_PYBIND_MAKE_OOT(freq_hopping
    ../../..
