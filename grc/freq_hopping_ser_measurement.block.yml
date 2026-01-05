@@ -1,0 +1,49 @@
+id: freq_hopping_ser_measurement
+label: SER Measurement
+category: '[freq_hopping]'
+
+templates:
+  imports: from gnuradio import freq_hopping
+  make: freq_hopping.ser_measurement(${filename})
+
+parameters:
+  - id: filename
+    label: Reference File
+    dtype: file_open
+    default: ''
+    hide: none
+
+inputs:
+  - label: in
+    domain: stream
+    dtype: byte
+    vlen: 1
+
+outputs:
+  - label: out
+    domain: stream
+    dtype: float
+    vlen: 1
+    optional: true  # 关键修改
+
+documentation: |-
+  SER Measurement Block
+  
+  Measures Symbol Error Rate (SER) by comparing received symbols with a reference file.
+  
+  Parameters:
+    - filename: Path to reference idx sequence file (one frame)
+  
+  Input:
+    - Demodulated idx sequence (char/byte)
+  
+  Output:
+    - Average SER of last 30 frames (float) - only output when 'phase_est' tag is detected
+  
+  The block detects 'phase_est' tags to identify frame boundaries.
+  When a new frame starts, it outputs the average SER of the last 30 frames.
+  Every 30 frames, it prints statistics including total frames received and average SER.
+  
+  Note: This is a general block that produces sparse output (one sample per frame).
+
+file_format: 1

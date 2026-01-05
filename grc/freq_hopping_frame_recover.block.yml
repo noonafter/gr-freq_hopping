@@ -3,7 +3,9 @@ label: Frame Recover
 category: '[freq_hopping]'
 
 templates:
-  imports: from gnuradio import freq_hopping
+  imports: |
+    from gnuradio import freq_hopping
+    from gnuradio.freq_hopping import calc_vlen_slot_frame
   make: freq_hopping.frame_recover(${frame_len})
 
 parameters:

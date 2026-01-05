@@ -18,6 +18,7 @@ list(APPEND freq_hopping_sources
     hop_demod_impl.cc
     symbol_recover_impl.cc
     frame_recover_impl.cc
+    ser_measurement_impl.cc
 )
 
 set(freq_hopping_sources "${freq_hopping_sources}" PARENT_SCOPE)

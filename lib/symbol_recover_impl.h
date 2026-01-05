@@ -22,6 +22,9 @@ private:
     bool d_is_synced;      // 是否已实现初始同步
     pmt::pmt_t d_tag_key;  // 目标标签名称 "phase_est"
 
+    uint64_t last_tag_offset;
+    float last_tag_value;
+
 public:
     symbol_recover_impl(int sps);
     ~symbol_recover_impl();
