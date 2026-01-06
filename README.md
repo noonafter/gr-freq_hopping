@@ -298,11 +298,3 @@ find . -name "*.cc" -o -name "*.h" | xargs clang-format -i
 ## 贡献
 
 欢迎提交 Issue 和 Pull Request！
-
-## 联系方式
-
-（请根据实际情况添加联系信息）
-
-## 致谢
-
-本项目基于 GNU Radio 框架开发，使用了 liquid-dsp 信号处理库
