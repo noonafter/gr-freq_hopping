@@ -120,7 +120,7 @@ RF接收 → hop_demod → symbol_recover → frame_recover →psk_demod →ser_
 
 ### 必需依赖
 - **GNU Radio** >= 3.10
-- **liquid-dsp**：液体 DSP 信号处理库
+- **liquid-dsp**：liquid-DSP 信号处理库
 - **CMake** >= 3.8
 - **Python** >= 3.6
 - **pybind11**：C++/Python 绑定
