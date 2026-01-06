@@ -27,8 +27,8 @@ slot_frame → bb_pskmod → hop_interp → hop_mod → RF发射
 
 ### 接收链路
 ```
-RF接收 → hop_demod → symbol_recover → frame_recover → ser_measurement
-        (频跳解调)   (符号恢复)        (帧恢复)        (误码率测量)
+RF接收 → hop_demod → symbol_recover → frame_recover →psk_demod →ser_measurement
+        (频跳解调)   (符号恢复)        (帧恢复)         (psk解调) (误码率测量)
 ```
 
 ## 模块说明
