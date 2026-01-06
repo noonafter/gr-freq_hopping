@@ -286,15 +286,6 @@ ctest -V
 find . -name "*.cc" -o -name "*.h" | xargs clang-format -i
 ```
 
-## 版本历史
-
-- **v1.0.0**（当前版本）
-  - 完整实现 9 个跳频通信模块
-  - 支持 BPSK/QPSK/8PSK 调制
-  - 支持多种跳频速率
-  - 集成 SER 测量功能
-  - 优化符号恢复和帧同步机制
-
 ## 贡献
 
 欢迎提交 Issue 和 Pull Request！
